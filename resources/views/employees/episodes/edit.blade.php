@@ -3,6 +3,9 @@
 @section('content')
     <h1>Edit employment episode</h1>
     <p class="muted">{{ $employee->display_name }} · {{ $employee->employee_code }}</p>
+    <p class="row-actions">
+        <a href="{{ route('employees.show', $employee) }}">Back to profile</a>
+    </p>
     <p class="note">Overlap with another episode is not checked. Date order is not checked. Inactive has no pay rule on this screen. {{ \App\Employees\EmploymentEpisodeRegistry::CLOSED_EPISODE_REOPEN_MESSAGE }}</p>
     @include('employees.partials.errors')
     @include('employees.episodes.form', [

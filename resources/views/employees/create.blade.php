@@ -3,6 +3,9 @@
 @section('content')
     <h1>Add employee</h1>
     <p class="muted">{{ $company->company_name }}. The company is fixed by the signed-in context.</p>
+    <p class="row-actions">
+        <a href="{{ route('employees.index') }}">Back to directory</a>
+    </p>
     <p class="note">Employee code and display name create the employee identity. Joining date, episode status, and last working date belong to the first employment episode and may all be left empty. If you enter any of those episode details, the current validation still applies.</p>
     @include('employees.partials.errors')
     <form class="card grid two" method="post" action="{{ route('employees.store') }}">

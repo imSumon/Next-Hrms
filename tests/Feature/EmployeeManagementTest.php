@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Employees\EmployeeRegistry;
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\EmploymentEpisode;
 use Tests\EmployeeDatabaseTestCase;
 
 class EmployeeManagementTest extends EmployeeDatabaseTestCase
@@ -193,6 +194,51 @@ class EmployeeManagementTest extends EmployeeDatabaseTestCase
             ->assertOk()
             ->assertSee('SYN-016')
             ->assertDontSee('SYN-001');
+    }
+
+    public function test_create_and_edit_screens_link_back_to_the_directory_or_profile(): void
+    {
+        $company = $this->company('Synthetic North Workshop');
+        $employee = $this->makeEmployee($company, 'SYN-30', 'North Nia Sample');
+        $other = $this->makeEmployee($company, 'SYN-31', 'North Omar Sample');
+        $episode = EmploymentEpisode::query()->create([
+            'company_id' => $company->id,
+            'employee_id' => $employee->id,
+            'joining_date' => '2026-01-15',
+            'episode_status' => 'Open',
+        ]);
+        $this->signInFor($company);
+
+        $directory = route('employees.index');
+        $profile = route('employees.show', $employee);
+        $otherProfile = route('employees.show', $other);
+
+        $this->assertStringNotContainsString($employee->id, $directory);
+        $this->assertStringContainsString($employee->id, $profile);
+        $this->assertStringNotContainsString($other->id, $profile);
+
+        $this->get('/employees/create')
+            ->assertOk()
+            ->assertSee('<a href="'.$directory.'">Back to directory</a>', false);
+
+        $this->get('/employees/'.$employee->id.'/edit')
+            ->assertOk()
+            ->assertSee('<a href="'.$profile.'">Back to profile</a>', false)
+            ->assertDontSee($otherProfile, false);
+
+        $this->get('/employees/'.$employee->id.'/episodes/create')
+            ->assertOk()
+            ->assertSee('<a href="'.$profile.'">Back to profile</a>', false)
+            ->assertDontSee($otherProfile, false);
+
+        $this->get('/employees/'.$employee->id.'/episodes/'.$episode->id.'/edit')
+            ->assertOk()
+            ->assertSee('<a href="'.$profile.'">Back to profile</a>', false)
+            ->assertDontSee($otherProfile, false);
+
+        $this->assertSame('North Nia Sample', $employee->refresh()->display_name);
+        $this->assertSame('SYN-30', $employee->employee_code);
+        $this->assertSame('Open', $episode->refresh()->episode_status);
     }
 
     public function test_invalid_episode_reference_is_not_found(): void
