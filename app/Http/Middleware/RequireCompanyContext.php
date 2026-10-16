@@ -14,7 +14,7 @@ class RequireCompanyContext
     {
         $user = $request->user();
         if ($user === null) {
-            return response()->view('employees.unavailable', [], 403);
+            return $this->unavailable($request);
         }
 
         $activeIds = CompanyMembership::query()
@@ -25,7 +25,7 @@ class RequireCompanyContext
         if ($activeIds->isEmpty()) {
             $request->session()->forget(CompanyContext::SESSION_KEY);
 
-            return response()->view('employees.unavailable', [], 403);
+            return $this->unavailable($request);
         }
 
         $selected = $request->session()->get(CompanyContext::SESSION_KEY);
@@ -40,6 +40,12 @@ class RequireCompanyContext
         }
 
         if (! is_string($selected)) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'An active company must be selected.',
+                ], 403);
+            }
+
             return redirect()->route('company.choose');
         }
 
@@ -60,5 +66,16 @@ class RequireCompanyContext
         app()->instance(CompanyContext::class, new CompanyContext($selected));
 
         return $next($request);
+    }
+
+    private function unavailable(Request $request): Response
+    {
+        if ($request->is('api/*')) {
+            return response()->json([
+                'message' => 'This account has no active company membership.',
+            ], 403);
+        }
+
+        return response()->view('employees.unavailable', [], 403);
     }
 }

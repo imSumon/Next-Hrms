@@ -10,6 +10,9 @@
     <main class="wrap">
         <h1>Log in</h1>
         <p class="muted">Use the account issued for your company membership.</p>
+        @if (session('status'))
+            <p class="ok" role="status">{{ session('status') }}</p>
+        @endif
         @if ($errors->any())
             <div class="errors" role="alert">
                 <ul>

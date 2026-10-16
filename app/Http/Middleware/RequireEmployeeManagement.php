@@ -23,6 +23,12 @@ class RequireEmployeeManagement
             ->exists();
 
         if (! $allowed) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Employee changes are not authorized.',
+                ], 403);
+            }
+
             return response()->view('employees.unauthorized', [], 403);
         }
 

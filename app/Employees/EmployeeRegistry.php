@@ -2,6 +2,8 @@
 
 namespace App\Employees;
 
+use App\Audit\EmployeeAuditTrail;
+use App\Models\AuditEvent;
 use App\Models\Employee;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\QueryException;
@@ -16,12 +18,12 @@ class EmployeeRegistry
 
     public function paginate(string $companyId, ?string $search): LengthAwarePaginator
     {
-        $term = str_replace(['%', '_'], '', trim((string) $search));
+        $term = trim((string) $search);
 
         return Employee::query()
             ->where('company_id', $companyId)
             ->when($term !== '', function ($query) use ($term) {
-                $pattern = '%'.$term.'%';
+                $pattern = '%'.$this->escapeLike($term).'%';
                 $query->where(function ($inner) use ($pattern) {
                     $inner->where('employee_code', 'ilike', $pattern)
                         ->orWhere('display_name', 'ilike', $pattern);
@@ -89,10 +91,29 @@ class EmployeeRegistry
 
     public function updateName(Employee $employee, string $displayName): Employee
     {
-        $employee->display_name = trim($displayName);
-        $employee->save();
+        $previousName = $employee->display_name;
+        $newName = trim($displayName);
 
-        return $employee;
+        return DB::transaction(function () use ($employee, $previousName, $newName) {
+            $employee->display_name = $newName;
+            $employee->save();
+
+            app(EmployeeAuditTrail::class)->record(
+                $employee->company_id,
+                AuditEvent::SUBJECT_EMPLOYEE,
+                $employee->id,
+                AuditEvent::ACTION_DISPLAY_NAME_UPDATED,
+                ['display_name' => $previousName],
+                ['display_name' => $newName],
+            );
+
+            return $employee;
+        });
+    }
+
+    private function escapeLike(string $term): string
+    {
+        return addcslashes($term, '\\%_');
     }
 
     private function isUniqueViolation(QueryException $exception): bool

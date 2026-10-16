@@ -19,12 +19,14 @@ class CompanyMembership extends Model
         'company_id',
         'status',
         'can_manage_employees',
+        'can_manage_organization_masters',
     ];
 
     protected function casts(): array
     {
         return [
             'can_manage_employees' => 'boolean',
+            'can_manage_organization_masters' => 'boolean',
         ];
     }
 

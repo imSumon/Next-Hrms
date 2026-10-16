@@ -1,8 +1,10 @@
 # Universal HRMS — Project Control Center
 
-Checkpoint date: 2026-10-12. Development continues where the architecture and the approved rules already exist. An unsigned decision gates the feature that depends on it. The DEC-01 meeting has not occurred, and no new decision was approved. Rejoin stays the Step 20B rule. The validation message and the employee screens now state that rule. The latest reported test result is 33 passed and 198 assertions. This status correction did not rerun the suite.
+Checkpoint date: 2026-10-12. A documentation correction on 2026-10-16 records later foundation evidence and AUD-07. Development continues where the architecture and the approved rules already exist. An unsigned decision gates the feature that depends on it. The DEC-01 meeting has not occurred, and no new decision was approved. Rejoin stays the Step 20B rule. The validation message and the employee screens now state that rule. The rejoin-message correction is complete and is not the current next task.
 
-This is the continuity record. It does not approve a policy, a load, or a new audit. The audit backlog is `docs/UNIVERSAL_HRMS_STEP21E_REMAINING_FUNCTIONAL_AUDIT_PLAN.md`.
+The result reported at the 2026-10-12 correction was 33 passed and 198 assertions. A later focused run reported 50 passed and 500 assertions. This correction did not rerun either suite. Automated tests are not signed-in browser UAT. A working direction is not an owner signature. An audit result does not authorize a future design. A migration design is not migration approval.
+
+This is the continuity record. It does not approve a policy, a load, or a further audit. The audit backlog is `docs/UNIVERSAL_HRMS_STEP21E_REMAINING_FUNCTIONAL_AUDIT_PLAN.md`. AUD-07 records a trace that was already complete. It does not lift a gate.
 
 No control-center file existed in `docs`, `legacy-reference\hrms\docs`, or `next-hrms\docs` before this checkpoint. `UNIVERSAL_HRMS_MIGRATION_DATA_CONTINUITY_ARCHITECTURE.md` is a migration design. It is not this checkpoint.
 
@@ -17,12 +19,13 @@ Requirements analysis is **partially complete** (Step 21D). Functional audit of 
 | Catalog | Step 21A dump parse | 25 modules, 101 submodules, 416 controllers |
 | Controller links | Step 21B | 397 pass the three logical checks. 19 fail. Five rows stay unresolved: 122, 123, 205, 213, 214 |
 | Live `legacy_master` | Step 21C | Not performed. MySQL was not running and was not started |
-| Behavior coverage | Step 21D, then AUD-01 through AUD-06 | 21D catalog grain is unchanged: 5 modules and 8 submodules partial, 91 inventory only, 0 catalog rows marked functionally analyzed. Six workflow audits were completed afterward and are not a reclassification of those 101 rows |
+| Behavior coverage | Step 21D, then AUD-01 through AUD-06, plus AUD-07 | 21D catalog grain is unchanged: 5 modules and 8 submodules partial, 91 inventory only, 0 catalog rows marked functionally analyzed. AUD-01 through AUD-06 are workflow audits. AUD-07 records approval callers and payroll reads. None of them reclassifies those 101 rows |
 | Requirements text | `docs/UNIVERSAL_HRMS_REQUIREMENTS.md`, matching copy under `legacy-reference\hrms\docs` | 167 IDs after Stage 2 added FY-CONF-001. Previous count was 166. D01–D18 were not renumbered |
 | Target companies | Steps 20N and 20O | Three `Active` rows. Not a migration approval |
 | Employees and episodes | Step 20O | Tables exist. Counts were 0 |
 | Attendance, leave, overtime, payroll tables | Step 21 matrix section 6 | Specified. Not created by the migrations run through Step 20 |
-| Employee module tests | Reported after the create-form note | 33 passed, 198 assertions, from `php artisan test` in `next-hrms` against `proedge_new_hrms_test`. This checkpoint did not rerun that command |
+| Employee module tests | Reported after the create-form note | 33 passed, 198 assertions, from `php artisan test` in `next-hrms` against `proedge_new_hrms_test`. That figure stays the earlier full-suite report. This correction did not rerun that command |
+| Later focused tests | Reported after the organization-master review | 50 passed, 500 assertions. Covers the session, directory, profile, display-name history, and department and designation masters in that focused set. This correction did not rerun it. It is not signed-in browser UAT |
 
 The requirements file is in both `docs` and `legacy-reference\hrms\docs`. Stage 2 added FY-CONF-001. Counts are 111 CORE, 33 CONFIGURABLE, 4 CLIENT EXTENSION, 17 BUSINESS DECISION, 2 DEFERRED, total 167.
 
@@ -47,6 +50,8 @@ Unsigned: D1, D2, D3, D4 group dispositions, D6, the meaning of `dis`, episode o
 A draft outside the register names D1 `obtain_verified_name`, D3 `verify_individually`, and D4 `case_by_case`, with the text `Anisur Rahman` and the date `2026-10-12`, conditions not recorded, status UNSIGNED, migration authorization NONE. That draft is not a signature. It was not copied into the register.
 
 D6 has a later session proposal in `docs/UNIVERSAL_HRMS_DEC01_SESSION_PREPARATION.md`: HR verifies the joining date and the employment status before a legacy row creates an episode, and a record that fails that check is held. The approver and the decision date are not recorded. Step 20R still shows Option A as the earlier recommendation, and its decision field stays blank.
+
+`docs/UNIVERSAL_HRMS_ORGANIZATION_MASTERS_PERMISSION_DECISION.md` records Option A as the Stage 5D working direction: `can_manage_organization_masters` is a separate membership flag, default false, and it does not reuse `can_manage_employees`. That file is not an external approval and has no approver signature. Step 20R was not edited.
 
 ## 3. Task register
 
@@ -87,6 +92,28 @@ D6 has a later session proposal in `docs/UNIVERSAL_HRMS_DEC01_SESSION_PREPARATIO
 | Documentation copy into `next-hrms\docs` | COPIED | 66 parent documents were copied. Step 20E was already identical and was not overwritten. The parent `docs` folder was not modified |
 | Stage 4B authentication and membership | COMPLETE FOR THIS STAGE | Session login, `users`, and `company_memberships`. Writes need `can_manage_employees`. That flag is not a universal role. No company was migration-approved |
 | Stage 4C employee lifecycle | COMPLETE FOR THIS STAGE | No new migration. Identity, code, and episode constraints stay. Setting a non-Open episode back to Open is refused. The Stage 4C report remains the record of that step, including its original message text. Payroll calculation and organization assignment are not started |
+| Stage 5D department and designation masters | COMPLETE FOR THIS STAGE | Separate company-scoped tables. `can_manage_organization_masters` defaults to false and does not grant employee changes. Name and status changes are audited. No employee assignment and no legacy load. The permission file is working direction, not an external signature. No company was migration-approved |
+| Display-name editing and history | COMPLETE FOR THIS SLICE | The profile can change `display_name` inside the active company. History shows the previous name, the new name, the actor, and the time. Episode editing was not added. No separate stage-report file was created for this slice |
+| Active-company directory label and logout | COMPLETE FOR THIS SLICE | The directory shows the server-selected company name. Logout is a POST that ends the session. Client `company_id` does not select the company. No separate stage-report file was created for this slice |
+| AUD-07 approval callers and payroll reads | SOURCE TRACE COMPLETE | Records where status `s` is submitted, the Proedge and Viyellatex status-`1` gap, and the salary-register reads for company ids 24, 20, and 10. Does not rewrite AUD-02. Does not authorize attendance or payroll design. BD-D16 and BD-D17 stay unsigned |
+| AUD-08 ESS identity on profile, files, and payslip | SOURCE TRACE COMPLETE FOR THIS BATCH | Session employee id binds profile, personal files, and the studied payslip reads. Password change and two posted-id updates are not that binding. Catalog grain is unchanged. Does not authorize implementation |
+| AUD-09 ESS document identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Document lists can filter by the session employee. View, update, delete, and upload by id do not. Not runtime verified. Does not authorize implementation |
+| AUD-10 ESS payroll identity and one PIMS update | SOURCE TRACE COMPLETE FOR THIS BATCH | Named ESS certificate and tax reads use the session employee. PF actions were not opened. PIMS `actionUpdate` loads an employee by id on the session company connection and saves the posted model. Not runtime verified. Does not authorize implementation |
+| AUD-11 ESS dashboard and overtime identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Dashboard lists can be session-scoped. Detail pages load the requested employee id. ESS overtime writes use posted ids on the `vtlw` connection. Not runtime verified. Does not authorize implementation |
+| AUD-12 ESS admin identity and payroll reads | SOURCE TRACE COMPLETE FOR THIS BATCH | `clientAdmin` list is company-filtered. Profile, payslip, and salary card load the requested employee id and read salary. Not runtime verified. Does not authorize implementation |
+| AUD-13 ESS hourly leave identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Create and delete use the session employee. Approval updates a request by id and then changes the balance. Not runtime verified. Does not authorize implementation |
+| AUD-14 ESS ticketing identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Ticket create does not set the employee in the controller. `actionDeleteleave` deletes a leave row only when its employee matches the session. Not runtime verified. Does not authorize implementation |
+| AUD-15 ESS lunch identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Lunch screens list the session employee number. Insert, update, and both deletes use the posted or requested id and do not compare it. Not runtime verified. Does not authorize implementation |
+| AUD-16 ESS mobile-bill identity | SOURCE TRACE COMPLETE FOR THIS BATCH | The mobile-bill list uses the session employee number. Insert, print, and delete use the posted or requested id and do not compare it. Not runtime verified. Does not authorize implementation |
+| Legacy portal visual evidence | BLOCKED PENDING AUTHORIZED LEGACY PORTAL ACCESS | VIS-01 through VIS-12 remain planned. The evidence folder has no PNG. The new application is not the legacy portal. Does not authorize implementation |
+| AUD-17 ESS bill management identity | SOURCE TRACE COMPLETE FOR THIS BATCH | Create stores the session employee number. Delete and both approval actions update by requested id. The list screens filter; those writes do not. Not runtime verified. Does not authorize implementation |
+| AUD-08 through AUD-17 identity consolidation | CONSOLIDATION COMPLETE FOR THIS BATCH | `next-hrms\docs\UNIVERSAL_HRMS_ESS_IDENTITY_RISK_REGISTER.md`. Patterns are proposals. No gate was signed. Catalog grain is unchanged |
+| AUD-18 ESS Atlas bills reads and delete | SOURCE TRACE COMPLETE FOR THIS BATCH | Lists and delete use the session employee. Delete also requires status `New`. Detail views load a bill by id. Not runtime verified. Does not authorize implementation |
+| AUD-19 ESS probation progress identity | SOURCE TRACE COMPLETE FOR THIS BATCH | The ESS list filters by the session employee number. Insert, review, view, and delete use a posted or requested id. Delete has no status test. Not runtime verified. Does not authorize implementation |
+| AUD-20 ESS assessment 360 identity reads | SOURCE TRACE COMPLETE FOR THIS BATCH | The employee's own list and view use the session employee. Rater lists do too. The four rater detail views load an entry by the requested id and do not repeat the role test. Submit actions were not traced. Not runtime verified. Does not authorize implementation |
+| ESS read-identity coverage matrix | COVERAGE MATRIX COMPLETE FOR THIS BATCH | `next-hrms\docs\UNIVERSAL_HRMS_ESS_READ_IDENTITY_COVERAGE_MATRIX.md`. Twenty read actions were opened. Prior audits were reused and not re-counted. The catalog has no action total. Not runtime verified. Does not authorize implementation |
+| AUD-21 DefaultController and Atlas read gaps | SOURCE TRACE COMPLETE FOR THIS BATCH | Eleven `DefaultController` actions classified. Eight previously unread Atlas views load by id or by paid status. Approve history filters the first approver. The file cabinet has no employee column. `searchorgo` treats `id` and `emp_id_no` as different filters. `responder_id` is written more than one way. Not runtime verified. Does not authorize implementation |
+| Authorization requirements consolidation | PROPOSED REQUIREMENTS NOTE | `next-hrms\docs\UNIVERSAL_HRMS_AUTHORIZATION_REQUIREMENTS.md`. Evidence is AUD-08 through AUD-21. Nine proposed requirements. Existing decision ids stay unsigned. Not runtime verification. Does not authorize implementation |
 
 ### Partial
 
@@ -104,10 +131,10 @@ D6 has a later session proposal in `docs/UNIVERSAL_HRMS_DEC01_SESSION_PREPARATIO
 | Task | Block |
 | --- | --- |
 | Employee migration and dry-run execution | D1, D2, D3, D4 dispositions, D6, and a signed exception register. Reconciliation not executed. No company is migration-approved |
-| Attendance, leave, overtime, and payroll behavior | BD-D02, BD-D03, BD-D07, BD-D09, BD-D11, BD-D12, BD-D13, BD-D14, BD-D16, BD-D17, and BD-D18 unsigned. BD-D15 deferred |
+| Attendance, leave, overtime, and payroll behavior | BD-D02, BD-D03, BD-D07, BD-D09, BD-D11, BD-D12, BD-D13, BD-D14, BD-D16, BD-D17, and BD-D18 unsigned. BD-D15 deferred. AUD-07 does not lift this block |
 | Policy freeze | D01–D18 unsigned. FY-BOUNDARY unsigned |
 | Live catalog comparison | Step 21C. Local MySQL was not running. Do not start it from this checkpoint |
-| Universal role and permission matrix | SEC-CORE-004 is not implemented. `can_manage_employees` is only the employee-module grant |
+| Universal role and permission matrix | SEC-CORE-004 is not implemented. `can_manage_employees` remains the employee-module grant. `can_manage_organization_masters` is a second module flag under the Stage 5D working direction, not a role list |
 
 ### Unverified
 
@@ -128,13 +155,19 @@ D6 has a later session proposal in `docs/UNIVERSAL_HRMS_DEC01_SESSION_PREPARATIO
 | Requirements section 46: architecture and development not started | Foundation and lifecycle tables exist. Policy values are still unsigned. Stage 2 left those two lines in place and marked them as the original wording |
 | Step 21D opening: control center absent | This file is that control center |
 | Control center after Stage 4C, and the Stage 4C report, say the validation message treats rejoin as unapproved | The message now says an inactive or separated episode cannot be set back to Open, and that rejoining keeps the same employee and employee code, creates a new episode, and leaves that episode unchanged. The detail page and the add-episode page state the same path and still say a second Open episode is refused. The Stage 4A and Stage 4C reports were not rewritten |
+| Incremental delivery plan section 5 names the rejoin-message correction as the next development task | That correction is the completed row above. It is not the current next task. The plan file was not rewritten by this correction |
+| This control center, at the 2026-10-12 correction, reports 33 passed and 198 assertions as the latest result | That figure remains the earlier full-suite report. The later focused report is 50 passed and 500 assertions. Neither run was repeated here |
 
 ## 5. Safety
 
-Do not start MySQL from this record. Do not treat the company rows as a load approval. Do not merge identities or silently recode. Do not repeat the three closed-month audits unless a named gap in the Step 21E plan requires it.
+Do not start MySQL from this record. Do not treat the company rows as a load approval. Do not merge identities or silently recode. Do not repeat the three closed-month audits, AUD-02, or AUD-07 unless a named contradiction appears. Do not treat AUD-07 as an attendance or payroll specification.
 
 ## 6. Next document
 
 `docs/UNIVERSAL_HRMS_INCREMENTAL_DELIVERY_AND_DECISION_GATES.md` records the delivery principle and the feature gates. `docs/UNIVERSAL_HRMS_DEC01_SESSION_PREPARATION.md` remains the unsigned session paper. Step 20R remains the register.
 
-The validation-message correction, the rejoin guidance, and the create-form note are in the application. The latest reported result is 33 passed and 198 assertions. This status correction did not rerun `php artisan test`. Return links on the create and edit screens, and search text that contains an underscore or a percent sign, were identified later and are not implemented. Unsigned decisions stay feature gates. Assignment, payroll, attendance, leave, and employee migration stay unbuilt. SCOPE-01 stays deferred. DB-01 still waits until MySQL is already running. No company is migration-approved. The DEC-01 meeting remains the path for writing an authorized outcome into a blank Step 20R field.
+`docs/UNIVERSAL_HRMS_AUD07_APPROVAL_CALLERS_AND_PAYROLL_READS.md` is the record of the completed approval-caller and payroll-read trace. It does not rewrite AUD-02 and it does not sign a gate.
+
+The validation-message correction, the rejoin guidance, and the create-form note are in the application. That correction is finished. It is not the current next task. The 2026-10-12 report of 33 passed and 198 assertions remains the earlier full-suite figure. The later focused report is 50 passed and 500 assertions. This correction did not rerun `php artisan test`. Those runs are not signed-in browser UAT. Return links on the create and edit screens were identified later and are not implemented. Employee directory search passes the term through `EmployeeRegistry::escapeLike`, which escapes backslash, `%`, and `_`. That method is the available evidence for those three characters. This correction does not claim that every search path is fully verified. Unsigned decisions stay feature gates. D1–D6, BD-D07, BD-D13, BD-D14, BD-D16, and BD-D17 stay unsigned, as do the other open gates in section 3. Department and designation masters are in the application under the Stage 5D working direction. That direction is not an owner signature. The masters do not assign employees. Assignment, payroll, attendance, leave, and employee migration stay unbuilt. SCOPE-01 stays deferred. DB-01 still waits until MySQL is already running. No company is migration-approved. The DEC-01 meeting remains the path for writing an authorized outcome into a blank Step 20R field. This correction does not authorize the next implementation milestone.
+
+The next source step, after the authorization requirements note, is an owner review of that note in the access-model sitting. The sitting can leave SEC-CORE-003 and SEC-CORE-004 unsigned. It precedes any authorization implementation. Provident fund, gratuity, recruitment, and PMS content stay deferred. `GfmanagementController`, `PmsController`, `PfmanagementController`, and `RecruitmentController` stay closed. Visual capture stays blocked until an authorized legacy session exists. Implementation of attendance, payroll, roles, narrower scope, and migration stays unauthorized.

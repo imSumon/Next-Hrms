@@ -2,8 +2,11 @@
 
 namespace App\Employees;
 
+use App\Audit\EmployeeAuditTrail;
+use App\Models\AuditEvent;
 use App\Models\Employee;
 use App\Models\EmploymentEpisode;
+use DateTimeInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -85,16 +88,59 @@ class EmploymentEpisodeRegistry
             }
         }
 
+        $previous = $episode->exists ? $this->auditedEpisodeValues($episode) : null;
+        $newValues = [
+            'joining_date' => $this->dateText($attributes['joining_date']),
+            'last_working_date' => $this->dateText($lastWorkingDate),
+            'episode_status' => $status,
+        ];
+
         $episode->fill([
             'company_id' => $employee->company_id,
             'employee_id' => $employee->id,
-            'joining_date' => $attributes['joining_date'],
-            'last_working_date' => $lastWorkingDate,
+            'joining_date' => $newValues['joining_date'],
+            'last_working_date' => $newValues['last_working_date'],
             'episode_status' => $status,
         ]);
         $episode->save();
 
+        app(EmployeeAuditTrail::class)->record(
+            $employee->company_id,
+            AuditEvent::SUBJECT_EPISODE,
+            $episode->id,
+            $previous === null ? AuditEvent::ACTION_EPISODE_CREATED : AuditEvent::ACTION_EPISODE_UPDATED,
+            $previous,
+            $newValues,
+        );
+
         return $episode;
+    }
+
+    /**
+     * @return array{joining_date: ?string, last_working_date: ?string, episode_status: string}
+     */
+    private function auditedEpisodeValues(EmploymentEpisode $episode): array
+    {
+        return [
+            'joining_date' => $this->dateText($episode->joining_date),
+            'last_working_date' => $this->dateText($episode->last_working_date),
+            'episode_status' => $episode->episode_status,
+        ];
+    }
+
+    private function dateText(mixed $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if ($value instanceof DateTimeInterface) {
+            return $value->format('Y-m-d');
+        }
+
+        $text = (string) $value;
+
+        return strlen($text) >= 10 ? substr($text, 0, 10) : $text;
     }
 
     private function reraiseConstraint(QueryException $exception): never

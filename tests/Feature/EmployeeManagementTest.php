@@ -36,6 +36,49 @@ class EmployeeManagementTest extends EmployeeDatabaseTestCase
             ->assertSee('No employees match this search.');
     }
 
+    public function test_search_treats_percent_and_underscore_as_literal_characters(): void
+    {
+        $north = $this->company('Synthetic North Workshop');
+        $south = $this->company('Synthetic South Workshop');
+        $this->makeEmployee($north, 'SYN-400', 'North Ordinary Name');
+        $this->makeEmployee($north, 'SYN%100', 'North Percent Code');
+        $this->makeEmployee($north, 'SYNX100', 'North Percent Decoy');
+        $this->makeEmployee($north, 'SYN_100', 'North Underscore Code');
+        $this->makeEmployee($north, 'SYNA100', 'North Underscore Decoy');
+        $this->makeEmployee($south, 'SYN%100', 'South Percent Code');
+        $this->signInFor($north);
+
+        $this->get('/employees?'.http_build_query(['q' => 'SYN-400']))
+            ->assertOk()
+            ->assertSee('North Ordinary Name')
+            ->assertDontSee('North Percent Code')
+            ->assertDontSee('North Underscore Code');
+
+        $this->get('/employees?'.http_build_query(['q' => 'Ordinary Name']))
+            ->assertOk()
+            ->assertSee('North Ordinary Name')
+            ->assertDontSee('North Percent Code');
+
+        $this->get('/employees?'.http_build_query(['q' => 'SYN%100']))
+            ->assertOk()
+            ->assertSee('North Percent Code')
+            ->assertDontSee('North Percent Decoy')
+            ->assertDontSee('North Ordinary Name')
+            ->assertDontSee('South Percent Code');
+
+        $this->get('/employees?'.http_build_query(['q' => 'SYN_100']))
+            ->assertOk()
+            ->assertSee('North Underscore Code')
+            ->assertDontSee('North Underscore Decoy')
+            ->assertDontSee('North Ordinary Name');
+
+        $this->signInFor($north, false);
+        $this->get('/employees?'.http_build_query(['q' => 'SYN%100']))
+            ->assertOk()
+            ->assertSee('North Percent Code')
+            ->assertDontSee('South Percent Code');
+    }
+
     public function test_empty_directory_states_there_are_no_employees(): void
     {
         $this->signInFor($this->company('Synthetic Empty Workshop'));
@@ -179,21 +222,52 @@ class EmployeeManagementTest extends EmployeeDatabaseTestCase
     public function test_directory_paginates(): void
     {
         $north = $this->company('Synthetic North Workshop');
+        $south = $this->company('Synthetic South Workshop');
+        $this->makeEmployee($north, 'SYN-001', 'Synthetic Person 1');
+        $this->makeEmployee($south, 'SYN-900', 'South Hidden Page');
         $this->signInFor($north);
 
-        for ($i = 1; $i <= EmployeeRegistry::PER_PAGE + 1; $i++) {
+        $singlePage = $this->get('/employees')->assertOk();
+        $singlePage->assertSee('SYN-001');
+        $singlePage->assertDontSee('South Hidden Page');
+        $singlePage->assertDontSee('aria-label="Pagination"', false);
+
+        for ($i = 2; $i <= EmployeeRegistry::PER_PAGE + 1; $i++) {
             $this->makeEmployee($north, sprintf('SYN-%03d', $i), 'Synthetic Person '.$i);
         }
 
-        $this->get('/employees')
+        $total = EmployeeRegistry::PER_PAGE + 1;
+        $firstPage = $this->get('/employees?'.http_build_query(['q' => 'SYN']))->assertOk();
+        $firstHtml = $firstPage->getContent();
+        $firstPage->assertSee('SYN-001')
+            ->assertSee('Showing 1 to '.EmployeeRegistry::PER_PAGE.' of '.$total)
+            ->assertDontSee('SYN-016')
+            ->assertDontSee('South Hidden Page')
+            ->assertDontSee('SYN-900');
+
+        $this->assertSame(1, substr_count($firstHtml, 'aria-label="Pagination"'));
+        $this->assertSame(1, substr_count($firstHtml, '>Previous<'));
+        $this->assertSame(1, substr_count($firstHtml, '>Next<'));
+        $this->assertSame(1, substr_count($firstHtml, 'aria-current="page"'));
+        $this->assertStringContainsString('aria-current="page">1<', $firstHtml);
+        $this->assertStringNotContainsString('sm:hidden', $firstHtml);
+        $this->assertStringNotContainsString('<svg', $firstHtml);
+
+        $this->assertSame(1, preg_match('/href="([^"]*q=SYN[^"]*page=2[^"]*)"/', $firstHtml, $pageTwo));
+        $secondPage = $this->get(html_entity_decode($pageTwo[1]))->assertOk();
+        $secondHtml = $secondPage->getContent();
+        $secondPage->assertSee('SYN-016')
+            ->assertSee('Showing '.$total.' to '.$total.' of '.$total)
+            ->assertDontSee('SYN-001')
+            ->assertDontSee('South Hidden Page');
+        $this->assertSame(1, substr_count($secondHtml, 'aria-label="Pagination"'));
+        $this->assertStringContainsString('aria-current="page">2<', $secondHtml);
+        $this->assertSame(1, preg_match('/href="([^"]*q=SYN[^"]*page=1[^"]*)"/', $secondHtml, $pageOne));
+
+        $this->get(html_entity_decode($pageOne[1]))
             ->assertOk()
             ->assertSee('SYN-001')
             ->assertDontSee('SYN-016');
-
-        $this->get('/employees?page=2')
-            ->assertOk()
-            ->assertSee('SYN-016')
-            ->assertDontSee('SYN-001');
     }
 
     public function test_create_and_edit_screens_link_back_to_the_directory_or_profile(): void

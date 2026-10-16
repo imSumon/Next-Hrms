@@ -73,30 +73,18 @@ AUD-01 through AUD-06 stay complete. They were not repeated.
 
 Employee migration stays blocked until D1, D2, D3, D4 dispositions, and D6 are signed, the exception register is signed, reconciliation has been executed, and a named company approval exists. A company row does not provide that approval.
 
-## 5. Next independent development task
+## 5. Current checkpoint
 
-Correct the episode validation message so it states the approved rejoin rule.
+The rejoin-message correction is complete. The validation message and the employee screens state the approved rejoin rule. That correction is not the next task.
 
-Evidence: Step 20B section 5 and LIFE-CORE-008 are approved. `EmploymentEpisodeRegistry` still says: “Whether a separated or inactive episode is reopened, or a new episode is created, is not approved.” The edit screen says the episode cannot be set back to Open. The refusal to rewrite the old row matches the approved rule. The sentence that the choice is not approved does not.
+The next implementation milestone is not yet authorized.
 
-This task uses the existing Laravel employee module, the existing membership checks, and the existing test database. It adds no migration and no column. It does not decide overlap, date order, inactive pay, or the inactive last-working-date question.
+Two unsigned review documents are available:
 
-Assignment schema, payroll, attendance, leave, a React template, and a stage named 4D are not this task. The documents do not define assignment columns or a 4D scope.
+- `docs/UNIVERSAL_HRMS_PRODUCT_SURFACE_AND_ACCESS_MODEL_DECISION.md`
+- `docs/UNIVERSAL_HRMS_BD_D16_BD_D17_OWNER_DECISION_WORKSHEET.md`
 
-### Acceptance criteria
-
-- An existing `inactive` or `separated` episode still cannot be saved as `Open`. Its status and last working date stay as they were.
-- The validation message states that rejoining keeps the same employee and code, creates a new episode, and leaves the previous episode in place.
-- The message no longer says that this choice is not approved.
-- The edit screen uses the same statement.
-- Adding a new episode while another episode is `Open` still fails.
-- Adding a new episode after the only previous episode is `separated` still succeeds, and the previous row is unchanged. That success is the approved rejoin shape. It does not approve overlap or date order.
-- A user without `can_manage_employees`, and a user in another company, still cannot make the change.
-- No migration is added. No legacy employee is imported.
-
-### Test strategy
-
-Run `php artisan test` from `next-hrms`. The suite uses `proedge_new_hrms_test`. Extend `tests/Feature/EmployeeLifecycleTest.php` for the message text and for a new episode after a separated episode. The Stage 4A and Stage 4B regressions stay in the same run. Do not point the run at `proedge_new_hrms`.
+No module, permission, schema, or migration should be implemented merely because this documentation correction is complete. The next implementation requires the applicable owner decisions and the gates already recorded in this file. This section does not change a decision status, fill Step 20R, or authorize a company migration.
 
 ## 6. Statement
 

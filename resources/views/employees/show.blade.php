@@ -65,6 +65,50 @@
     </section>
 
     <section class="card">
+        <h2>Audit history</h2>
+        @if ($auditEvents->isEmpty())
+            <p class="empty">No audit events.</p>
+        @else
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>When</th>
+                            <th>Action</th>
+                            <th>Actor</th>
+                            <th>Previous</th>
+                            <th>New</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($auditEvents as $event)
+                            <tr>
+                                <td>{{ $event->acted_at }}</td>
+                                <td>{{ $event->actionLabel() }}</td>
+                                <td>{{ $event->actingUser?->name }}</td>
+                                <td>
+                                    @forelse ($event->valueLines($event->previous_value) as $line)
+                                        <div>{{ $line }}</div>
+                                    @empty
+                                        —
+                                    @endforelse
+                                </td>
+                                <td>
+                                    @forelse ($event->valueLines($event->new_value) as $line)
+                                        <div>{{ $line }}</div>
+                                    @empty
+                                        —
+                                    @endforelse
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </section>
+
+    <section class="card">
         <h2>Organization and location</h2>
         <p>No assignment is stored for this employee. Branch, department, and location are separate foundation records, and this stage does not treat them as an employee assignment.</p>
     </section>

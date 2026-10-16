@@ -26,7 +26,7 @@ abstract class EmployeeDatabaseTestCase extends TestCase
         return $app;
     }
 
-    protected function signInFor(Company $company, bool $manage = true, string $status = 'active'): User
+    protected function signInFor(Company $company, bool $manage = true, string $status = 'active', bool $manageMasters = false): User
     {
         $user = User::query()->create([
             'name' => 'Synthetic Clerk',
@@ -39,6 +39,7 @@ abstract class EmployeeDatabaseTestCase extends TestCase
             'company_id' => $company->id,
             'status' => $status,
             'can_manage_employees' => $manage,
+            'can_manage_organization_masters' => $manageMasters,
         ]);
 
         $this->actingAs($user);

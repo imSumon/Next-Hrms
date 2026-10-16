@@ -64,11 +64,33 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
             'company_name' => 'Synthetic North Workshop',
             'status' => 'Active',
         ]);
+        $employee = Employee::query()->create([
+            'company_id' => $company->id,
+            'employee_code' => 'SYN-1',
+            'display_name' => 'North Ada Sample',
+        ]);
         $this->signInFor($company);
 
-        $this->post('/logout')->assertRedirect('/login');
+        $sessionId = session()->getId();
+        $token = session()->token();
+
+        $this->post('/logout')
+            ->assertRedirect('/login')
+            ->assertSessionHas('status', 'You have signed out.');
         $this->assertGuest();
+        $this->assertNotSame($sessionId, session()->getId());
+        $this->assertNotSame($token, session()->token());
+        $this->assertNull(session(CompanyContext::SESSION_KEY));
+
+        $this->get('/login')->assertOk()->assertSee('You have signed out.');
         $this->get('/employees')->assertRedirect('/login');
+        $this->getJson('/api/employees')
+            ->assertUnauthorized()
+            ->assertJsonMissing(['display_name' => 'North Ada Sample'])
+            ->assertJsonMissing(['company_name' => 'Synthetic North Workshop']);
+        $this->getJson('/api/employees/'.$employee->id)
+            ->assertUnauthorized()
+            ->assertJsonMissing(['display_name' => 'North Ada Sample']);
     }
 
     public function test_login_post_stays_on_the_web_middleware_stack(): void
