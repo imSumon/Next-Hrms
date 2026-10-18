@@ -115,7 +115,7 @@ class EmployeeManagementTest extends EmployeeDatabaseTestCase
             'display_name' => 'North Drew Sample',
         ])->assertSessionHasErrors('company_id');
 
-        $this->assertSame(0, Employee::query()->count());
+        $this->assertSame(0, Employee::query()->where('company_id', $north->id)->count());
     }
 
     public function test_same_code_is_unique_inside_a_company_and_allowed_in_another(): void

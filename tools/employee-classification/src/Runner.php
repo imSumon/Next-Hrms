@@ -7,12 +7,11 @@ namespace Hrms\EmployeeClassification;
 final class Runner
 {
     public function __construct(
-        private readonly Safeguard $safeguard = new Safeguard(),
-        private readonly Fingerprint $fingerprint = new Fingerprint(),
-        private readonly DumpParser $parser = new DumpParser(),
-        private readonly Reconciler $reconciler = new Reconciler(),
-    ) {
-    }
+        private readonly Safeguard $safeguard = new Safeguard,
+        private readonly Fingerprint $fingerprint = new Fingerprint,
+        private readonly DumpParser $parser = new DumpParser,
+        private readonly Reconciler $reconciler = new Reconciler,
+    ) {}
 
     /**
      * Classify rows already read by the parser. This does not open a dump or a database.
@@ -38,22 +37,44 @@ final class Runner
      */
     public function runApprovedExtracts(string $projectRoot, string $outputPath): string
     {
+        return $this->writeClassification($projectRoot, $outputPath, GateSet::closed(), null, null);
+    }
+
+    public function classifyCatalog(string $projectRoot, string $outputPath, GateSet $gates, int $catalogCompanyId, string $authorizationNote): string
+    {
+        if ($gates->closed) {
+            throw new ClassificationException('This classification needs explicit gates.');
+        }
+        if ($gates->d4 !== 'proposed') {
+            throw new ClassificationException('D4 stays proposed. Duplicate-code groups are not authorized.');
+        }
+        if (! in_array($catalogCompanyId, [24, 20, 10], true)) {
+            throw new ClassificationException('Catalog company is outside the approved crosswalk.');
+        }
+
+        return $this->writeClassification($projectRoot, $outputPath, $gates, $catalogCompanyId, $authorizationNote);
+    }
+
+    private function writeClassification(string $projectRoot, string $outputPath, GateSet $gates, ?int $catalogCompanyId, ?string $authorizationNote): string
+    {
         $config = Manifest::config();
         if (($config['signed_exceptions'] ?? []) !== []) {
             throw new ClassificationException('No signed exception register is approved.');
         }
         if (($config['mode'] ?? '') !== 'gates_closed') {
-            throw new ClassificationException('This runner stays in gates_closed mode.');
+            throw new ClassificationException('The manifest mode stays gates_closed. Explicit gates are an execution input.');
         }
         $this->safeguard->assertNoForbiddenTarget($config);
         $this->safeguard->assertNoForbiddenTarget($projectRoot, 'project root');
         $applicationRoot = dirname(__DIR__, 3);
         $destination = $this->safeguard->assertOutputPath($outputPath, $applicationRoot, $projectRoot);
 
-        $gates = GateSet::closed();
         $classified = [];
         $metas = [];
         foreach (Manifest::sources() as $source) {
+            if ($catalogCompanyId !== null && (int) $source['catalog_company_id'] !== $catalogCompanyId) {
+                continue;
+            }
             $path = Manifest::resolve($projectRoot, (string) $source['relative_path']);
             $stream = $this->fingerprint->openVerified(
                 $path,
@@ -71,10 +92,20 @@ final class Runner
             $classified[] = (new Classifier($gates))->classify($meta, $parsed['rows']);
             $metas[] = $meta;
         }
+        if ($classified === []) {
+            throw new ClassificationException('No manifest source matched the requested catalog company.');
+        }
 
         $report = $this->finish($classified, $gates, $metas);
+        if ($authorizationNote !== null) {
+            $report['decision_record'] = [
+                'step_20r_updated' => false,
+                'company_migration_approved' => false,
+                'note' => $authorizationNote,
+            ];
+        }
         $encoded = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
-        (new ReportPublisher())->publish($destination, $encoded);
+        (new ReportPublisher)->publish($destination, $encoded);
 
         return $destination;
     }

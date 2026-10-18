@@ -9,6 +9,7 @@ use App\Models\EmploymentEpisode;
 use App\Models\User;
 use App\Tenancy\CompanyContext;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Auth;
 use Tests\EmployeeDatabaseTestCase;
@@ -100,7 +101,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
         $this->assertContains('web', $route->gatherMiddleware());
         $this->assertContains(
             PreventRequestForgery::class,
-            app(\Illuminate\Foundation\Configuration\Middleware::class)->getMiddlewareGroups()['web'],
+            app(Middleware::class)->getMiddlewareGroups()['web'],
         );
     }
 
@@ -150,7 +151,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
             'employee_code' => 'SYN-2',
             'display_name' => 'North Ben Sample',
         ])->assertForbidden();
-        $this->assertSame(1, Employee::query()->count());
+        $this->assertSame(1, Employee::query()->where('company_id', $company->id)->count());
     }
 
     public function test_another_company_employee_and_episode_are_not_found(): void
@@ -323,6 +324,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
 
     public function test_dev_provisioning_grants_one_membership_when_local(): void
     {
+        $companiesBefore = Company::query()->count();
         $company = Company::query()->create([
             'company_name' => 'Synthetic North Workshop',
             'status' => 'Active',
@@ -341,7 +343,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
         $membership = CompanyMembership::query()->where('user_id', $user->id)->first();
         $this->assertSame($company->id, $membership->company_id);
         $this->assertFalse($membership->can_manage_employees);
-        $this->assertSame(1, Company::query()->count());
+        $this->assertSame($companiesBefore + 1, Company::query()->count());
 
         $this->artisan('hrms:provision-dev-user', [
             '--name' => 'Synthetic Clerk',

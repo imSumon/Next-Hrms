@@ -23,7 +23,7 @@ class EmployeeLifecycleTest extends EmployeeDatabaseTestCase
             'last_working_date' => '2026-04-15',
         ])->assertSessionHasErrors('last_working_date');
 
-        $this->assertSame(0, Employee::query()->count());
+        $this->assertSame(0, Employee::query()->where('company_id', $company->id)->count());
 
         $this->post('/employees', [
             'employee_code' => 'SYN-40',
@@ -93,7 +93,7 @@ class EmployeeLifecycleTest extends EmployeeDatabaseTestCase
         ])->assertSessionHasErrors(['joining_date', 'episode_status']);
 
         $this->assertSame(0, Employee::query()->whereIn('employee_code', ['SYN-52', 'SYN-53', 'SYN-54'])->count());
-        $this->assertSame(1, EmploymentEpisode::query()->count());
+        $this->assertSame(1, EmploymentEpisode::query()->where('company_id', $company->id)->count());
 
         $this->signInFor($company, false);
         $this->post('/employees', [
