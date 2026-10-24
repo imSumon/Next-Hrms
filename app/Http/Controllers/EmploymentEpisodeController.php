@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Employees\EmployeeRegistry;
 use App\Employees\EmploymentEpisodeRegistry;
 use App\Http\Requests\StoreEmploymentEpisodeRequest;
 use App\Http\Requests\UpdateEmploymentEpisodeRequest;
+use App\Models\Employee;
 use App\Models\EmploymentEpisode;
 use App\Tenancy\CompanyContext;
 use Illuminate\Http\RedirectResponse;
@@ -55,16 +57,16 @@ class EmploymentEpisodeController extends Controller
             ->with('status', 'Employment episode updated.');
     }
 
-    private function findEmployee(CompanyContext $context, string $employeeId): \App\Models\Employee
+    private function findEmployee(CompanyContext $context, string $employeeId): Employee
     {
-        $employee = app(\App\Employees\EmployeeRegistry::class)->find($context->companyId, $employeeId);
+        $employee = app(EmployeeRegistry::class)->find($context->companyId, $employeeId);
         abort_if($employee === null, 404);
 
         return $employee;
     }
 
     /**
-     * @return array{0: \App\Models\Employee, 1: EmploymentEpisode}
+     * @return array{0: Employee, 1: EmploymentEpisode}
      */
     private function findPair(CompanyContext $context, string $employeeId, string $episodeId): array
     {

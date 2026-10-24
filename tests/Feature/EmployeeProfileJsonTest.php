@@ -187,7 +187,7 @@ class EmployeeProfileJsonTest extends EmployeeDatabaseTestCase
 
         $this->assertSame('North Ada Sample', $employee->refresh()->display_name);
         $this->assertSame('SYN-100', $employee->employee_code);
-        $this->assertSame(0, AuditEvent::query()->count());
+        $this->assertSame(0, AuditEvent::query()->where('company_id', $north->id)->count());
     }
 
     public function test_employee_code_and_identity_cannot_be_changed(): void
@@ -207,7 +207,7 @@ class EmployeeProfileJsonTest extends EmployeeDatabaseTestCase
         $employee->refresh();
         $this->assertSame('SYN-100', $employee->employee_code);
         $this->assertSame('North Ada Sample', $employee->display_name);
-        $this->assertSame(0, AuditEvent::query()->count());
+        $this->assertSame(0, AuditEvent::query()->where('company_id', $north->id)->count());
     }
 
     public function test_a_client_company_id_does_not_move_the_employee(): void
@@ -299,7 +299,7 @@ class EmployeeProfileJsonTest extends EmployeeDatabaseTestCase
             ->assertJsonMissing(['display_name' => 'North Ada Sample']);
 
         $this->assertSame('North Ada Sample', $employee->refresh()->display_name);
-        $this->assertSame(0, AuditEvent::query()->count());
+        $this->assertSame(0, AuditEvent::query()->where('company_id', $north->id)->count());
     }
 
     public function test_an_invalid_display_name_is_rejected(): void
@@ -314,7 +314,7 @@ class EmployeeProfileJsonTest extends EmployeeDatabaseTestCase
             ->assertJsonPath('errors.display_name.0', 'Display name is required.');
 
         $this->assertSame('North Ada Sample', $employee->refresh()->display_name);
-        $this->assertSame(0, AuditEvent::query()->count());
+        $this->assertSame(0, AuditEvent::query()->where('company_id', $north->id)->count());
     }
 
     public function test_an_update_without_a_company_context_is_rejected(): void

@@ -61,7 +61,7 @@ Quarantine each unresolved duplicate-code group. Keep every source row traceable
 
 Evidence: Step 20G. Seven `emp_id_no` groups, 14 rows: `10024`, `15575`, `132058`, `6119`, `10023`, `10027`, `10034`. The no-merge and no-recode principles are already **APPROVED** in the employee-code decision and Step 20E. D4 adds the proposed quarantine of the whole group until each row is authorized.
 
-Further approval required: acceptance of group quarantine as the load behavior, then a disposition for each of the 14 rows. Those dispositions do not exist.
+Further approval required: acceptance of group quarantine as the load behavior, then a disposition for each of the 14 rows. Step 20G section 11 is the worksheet. All seven groups remain unresolved. No owner, date, or cited evidence is recorded.
 
 ### D5. Legacy `dis` — UNRESOLVED
 

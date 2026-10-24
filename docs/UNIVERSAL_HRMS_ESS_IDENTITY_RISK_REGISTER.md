@@ -106,7 +106,7 @@ Continuing the source audit does not need a new signature. SEC-CORE-003, SEC-COR
 
 ## 5. Next task
 
-Owner review of `next-hrms\docs\UNIVERSAL_HRMS_AUTHORIZATION_REQUIREMENTS.md` in the access-model sitting. That review precedes implementation. SEC-CORE-003 and SEC-CORE-004 may stay unsigned. Do not open `GfmanagementController`, `PmsController`, `PfmanagementController`, or `RecruitmentController`. Do not classify the remaining 210 declarations one by one. Do not repeat AUD-01 through AUD-21.
+The owner sitting paper is `next-hrms\docs\UNIVERSAL_HRMS_AUTHORIZATION_OWNER_REVIEW.md`. It is not a decision. SEC-CORE-003 and SEC-CORE-004 may stay unsigned. BD-D16, BD-D17, and D1–D6 are not decided there. Do not open `GfmanagementController`, `PmsController`, `PfmanagementController`, or `RecruitmentController`. Do not classify the remaining 210 declarations one by one. Do not repeat AUD-01 through AUD-21.
 
 The 295 declaration count is not a count of audited reads. Of the 210 non-deferred declarations, not every declaration was classified. Implementation of attendance, payroll, roles, narrower scope, and migration stays unauthorized.
 

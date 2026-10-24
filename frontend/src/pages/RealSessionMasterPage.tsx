@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { RealSessionLinks } from '../components/RealSessionLinks';
 import { SessionLogoutButton, SessionLogoutError, SignedOutScreen, useSessionLogout } from '../components/SessionLogout';
 import {
   createMasterRecord,
@@ -52,12 +53,9 @@ function RealSessionMasterPage({ kind }: { kind: MasterKind }) {
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-4 py-4">
           <p className="text-lg font-semibold text-[#111827]">Universal HRMS</p>
           <p className="rounded-full bg-stone-900 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-white">Laravel session</p>
-          <nav className="ml-auto flex flex-wrap items-center gap-4 text-sm" aria-label={`${label} navigation`}>
-            <Link className="font-semibold text-indigo-700" to="/session/employees">Employees</Link>
-            <Link className="font-semibold text-indigo-700" to="/session/departments">Departments</Link>
-            <Link className="font-semibold text-indigo-700" to="/session/designations">Designations</Link>
+          <RealSessionLinks label={`${label} navigation`}>
             <SessionLogoutButton logout={logout} />
-          </nav>
+          </RealSessionLinks>
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl px-4 py-8">

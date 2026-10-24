@@ -31,6 +31,32 @@ class AuditEvent extends Model
 
     public const ACTION_STATUS_UPDATED = 'status_updated';
 
+    public const SUBJECT_LEAVE_TYPE = 'leave_type';
+
+    public const SUBJECT_LEAVE_POSITION = 'leave_position';
+
+    public const SUBJECT_LEAVE_POSITION_MOVEMENT = 'leave_position_movement';
+
+    public const ACTION_LEAVE_POSITION_CREATED = 'leave_position_created';
+
+    public const ACTION_LEAVE_POSITION_UPDATED = 'leave_position_updated';
+
+    public const ACTION_LEAVE_MOVEMENT_RECORDED = 'leave_movement_recorded';
+
+    public const SUBJECT_PUNCH_EVENT = 'punch_event';
+
+    public const SUBJECT_PUNCH_IDENTITY = 'punch_identity';
+
+    public const ACTION_PUNCH_EVENT_RECORDED = 'punch_event_recorded';
+
+    public const ACTION_PUNCH_IDENTITY_RECORDED = 'punch_identity_recorded';
+
+    public const ACTION_PUNCH_IDENTITY_EFFECTIVE_FROM_MOVED_EARLIER = 'punch_identity_effective_from_moved_earlier';
+
+    public const ACTION_PUNCH_IDENTITY_REGISTERED = 'punch_identity_registered';
+
+    public const ACTION_PUNCH_IDENTITY_ENDED = 'punch_identity_ended';
+
     public $incrementing = false;
 
     protected $keyType = 'string';

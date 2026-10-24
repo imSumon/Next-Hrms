@@ -30,7 +30,7 @@ Do not repeat these unless a row below names the missing piece.
 | Proedge August 2026, VTL September 2026, Atlas September 2026 | Closed-month audits | CEVA has no operated month. Those months were not partial-month cases |
 | Payroll consumption of those months | Same audits and the workbook | Formulas unsigned |
 | Catalog inventory and link classification | Steps 21A and 21B | Live comparison. Five controller rows unresolved |
-| Requirements text for the in-scope list | Requirements document, 167 IDs after FY-CONF-001. The earlier inventory was 166 | Policy values unsigned |
+| Requirements text for the in-scope list | Active requirements file, 173 IDs: 116 CORE, 34 CONFIGURABLE, 4 CLIENT EXTENSION, 17 BUSINESS DECISION, 2 DEFERRED. The earlier inventory was 166. FY-CONF-001 made 167. LEAVE-CORE-005, LEAVE-CORE-006, LEAVE-CORE-007, LEAVE-CORE-008, MIG-CORE-011, and LEAVE-CONF-003 make 173. LEAVE-CORE-008 stays proposed | Policy values unsigned |
 | Decision register and agenda | Steps 20R and 20R-1 | Capture fields blank |
 
 Documentation updates, not new investigations:
@@ -187,7 +187,7 @@ These gates are separate.
 | --- | --- | --- |
 | Legacy functional audit complete for the first-release list | AUD-01 through AUD-03 closed, and AUD-04 through AUD-06 either closed or explicitly left unknown. SCOPE-01 still deferred | A catalog of 25 and 101. A directory count |
 | Universal requirements analysis complete | The in-scope `shall` text, signed values for the decisions that change those sentences, and acceptance checks for those values | Section 46’s “core ready” line alone. Inventory completion |
-| First-release scope ready for approval | The in-scope list plus a signed statement that SCOPE-01 stays out, or a signed addition | An analyst observation that those modules are later |
+| First-release scope ready for approval | The in-scope list plus a signed statement that SCOPE-01 stays out, or a signed addition. Step 20R section 6D, approved 2026-10-17, is that signed statement. Every other row in this table is unchanged | An analyst observation that those modules are later. Section 6D does not mark a partial module functionally analyzed or ready to build, and it does not authorize an implementation milestone |
 | Development authorized for one capability | The requirement for that capability is signed, its dependencies in DEC-01 are signed, and the build step names the tables | A proposed rule. Empty target tables |
 | A company ready for employee migration | D1, D2, D3, D4 dispositions, and D6 signed, exception register signed, reconciliation result accepted, and a named company approval | The three company rows. A dry-run design |
 
@@ -197,7 +197,7 @@ AUD-01 through AUD-06 are complete as source audits. Stage 2 consolidated them. 
 
 Next action for unsigned policy: **formal decision capture** using `docs/UNIVERSAL_HRMS_STAGE3_DECISION_MEETING_PACKAGE.md` and the blank fields in Step 20R. SCOPE-01 stays deferred. DB-01 still waits until MySQL is already running. DB-01 is not complete.
 
-`docs/UNIVERSAL_HRMS_INCREMENTAL_DELIVERY_AND_DECISION_GATES.md` is the later sequencing record. It keeps each unsigned decision on the feature that depends on it. It does not fill Step 20R, and the DEC-01 meeting has not occurred.
+`docs/UNIVERSAL_HRMS_INCREMENTAL_DELIVERY_AND_DECISION_GATES.md` is the later sequencing record. It keeps each unsigned decision on the feature that depends on it. Step 20R section 6D is the later signed scope statement. This plan does not fill any other Step 20R field. The DEC-01 meeting has not occurred.
 
 The validation-message correction named in that plan was implemented afterward. The employee detail page and the add-episode page state the approved rejoin path. The create form states that the episode fields are the optional first episode. The latest reported test result is 33 passed and 198 assertions. This plan update did not rerun the suite. The Stage 4A and Stage 4C reports remain the records of those stages.
 

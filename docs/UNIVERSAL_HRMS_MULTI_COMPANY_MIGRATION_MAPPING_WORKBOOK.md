@@ -286,7 +286,7 @@ Leave letters or words on the day (Leave, EL, CL, SL, PL, P, and VTL leave lette
 
 ## 11. Leave mapping
 
-Source: `hrm_leave_emp_app` and the leave type master that those applications reference. Related structures are loaded only when the extract shows they exist. Balances are loaded only when a real balance store exists. The studied months did not establish a leave-balance ledger that payroll read. Absence of that ledger is “not in source.” A zero balance is not created.
+Source: `hrm_leave_emp_app` and the leave type master that those applications reference. Related structures are loaded only when the extract shows they exist. A real balance store may be retained as a proposed position. It is not a confirmed opening. The studied months did not establish a leave-balance ledger that payroll read. Absence of that ledger is “not in source.” A zero balance is not created. Agreement between `leave_financial_year` and the year labels on the balance rows does not identify the writer or the accepted opening figure. LEAVE-OPENING stays unsigned.
 
 | Target | Transformation |
 |---|---|
@@ -601,7 +601,7 @@ Categories:
 
 | Category | Examples from these three companies |
 |---|---|
-| Duplicate | Active employee code reused inside one company. VTL punch cards 126384 and 132058 |
+| Duplicate | Active employee code reused inside one company. VTL punch cards 126384 and 132058. The seven Viyellatex employee-code groups are worksheeted in Step 20G section 11 and remain unresolved |
 | Missing reference | Punch with no map. Branch id with no branch. Salary row with no employee. Shift id with no `att_shift` |
 | Invalid value | Impossible dates. A leaving date that the reviewer rejects as corrupt. A timestamp that is not a real clock |
 | Ambiguous meaning | Status numbers. VTL `ot_hours` versus the blanking branch. Atlas late rows at 22:22 and 22:44. PF total equal to Adhoc Allowance. Photo text before confirmation |

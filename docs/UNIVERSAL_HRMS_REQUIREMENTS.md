@@ -235,6 +235,11 @@ The system must produce one shift per employee-date (SHIFT-CORE-002). The compan
 | LEAVE-CORE-004 | The system shall be able to apply an approved leave to the day result. | CORE | P1 | COMPANY | ATT-CORE-002 | |
 | LEAVE-CONF-001 | The company shall configure which approval outcome writes the day result. | CONFIGURABLE | P1 | COMPANY | LEAVE-CORE-004 | Legacy status 3 is not the universal code. |
 | LEAVE-CONF-002 | The company shall configure, per leave type, whether the leave is paid, unpaid, or partial. | CONFIGURABLE | P1 | COMPANY | LEAVE-CORE-001 | See D06. Both closed months left basic unchanged. That is not proof of a universal paid-leave rule. |
+| LEAVE-CORE-005 | The system shall record a proposed leave-balance position for one company, one employee, one leave type, and one leave period. The position shall hold the proposed opening amount, the period start and end or the period label, the source evidence, and the stated calculation or source basis. | CORE | P1 | COMPANY | LEAVE-CORE-001 | The basis is a recorded statement or a reference. This requirement chooses no earning formula, divisor, or leave year. |
+| LEAVE-CORE-006 | The system shall record each balance movement and each reversal as its own entry, with the amount, the direction, the related request or adjustment when one exists, the actor, and the time. A reversal shall leave the original movement readable. | CORE | P1 | COMPANY | LEAVE-CORE-005 | No earning formula and no approval role is implied. |
+| LEAVE-CORE-007 | The system shall record, on a proposed position, the reconciliation result, the variance, the exception status, and the authorized confirmation. Without that confirmation, the position shall not be available as an approved balance for leave approval. | CORE | P1 | COMPANY | LEAVE-CORE-005 | The states are proposed, excepted, and confirmed. Variance is a recorded difference. An unreconciled variance stays empty. No numerical tolerance is set. |
+| LEAVE-CONF-003 | The company shall configure its leave period separately from the payroll month and from the financial year. | CONFIGURABLE | P1 | COMPANY | FY-CONF-001 | A stored legacy label is evidence of what was stored. It is not the signed rule. LEAVE-OPENING stays unsigned. |
+| LEAVE-CORE-008 | When an encashment is included in pay, the payroll result shall reference the encashment record, and the paid amount shall remain distinguishable from the leave-ledger day count. | CORE | P1 | COMPANY | LEAVE-CORE-006, PAY-CORE-007 | PROPOSED. Not approved. It chooses no formula, no eligibility rule, and no approval role. F-35 and F-36 are the legacy evidence that those stores are separate. |
 
 ## 23. Attendance Correction
 
@@ -404,6 +409,7 @@ Functional only. Legacy columns do not map one-for-one.
 | MIG-CORE-008 | Migration shall load historical payroll results as snapshots, without claiming attendance inputs that were not stored. | CORE | P1 | COMPANY | PAY-CORE-004 | |
 | MIG-CORE-009 | Migration shall load shift definitions and whatever dated assignments exist, and shall record when only an employee default existed. | CORE | P2 | COMPANY | SHIFT-CORE-002 | |
 | MIG-CORE-010 | Migration shall preserve actor and time when the source has them, and shall mark unknown actor as unknown. | CORE | P1 | COMPANY | AUDIT-CORE-001 | |
+| MIG-CORE-011 | Migration shall load a legacy leave balance only as a proposed position with its source evidence. It shall not mark that position confirmed, and it shall not create an approved balance where the opening figure, the reconciliation, or the confirmation is unresolved. | CORE | P1 | COMPANY | LEAVE-CORE-007 | An explicit exception and a recorded sign-off are the only path from proposed to confirmed. No tolerance is invented. A zero balance is not created to fill a gap. |
 
 ## 40. Security Requirements
 
@@ -546,6 +552,7 @@ Stage 2 note: those two lines are the wording of this section as first written. 
 - Late measurement start and any late deduction (D04, D05).
 - Early-out threshold and any early deduction (D05).
 - Paid, unpaid, or partial leave by type (D06).
+- The accepted opening leave balance, the operational leave year, encashment meaning, and the person who confirms a balance (LEAVE-OPENING). Stored year labels are not that decision.
 - Absence formula, including whether any formula exists (D07).
 - Payable-day basis.
 - OT eligibility, formula, rounding, approval, minimum, maximum, and rate (D08–D12).
@@ -588,11 +595,11 @@ Counted from the requirement rows in this document. Each ID appears once.
 
 | Class | Count |
 |---|---:|
-| CORE | 111 |
-| CONFIGURABLE | 33 |
+| CORE | 116 |
+| CONFIGURABLE | 34 |
 | CLIENT EXTENSION | 4 |
 | BUSINESS DECISION | 17 |
 | DEFERRED | 2 |
-| Total | 167 |
+| Total | 173 |
 
-P0 rows: 52. That is 47 capability or configuration requirements marked P0, plus BD-D02, BD-D03, BD-D09, BD-D16, and BD-D18. The two deferred rows are PER-CONF-003 and BD-D15. Stage 2 added FY-CONF-001 as P1 CONFIGURABLE. The previous total was 166. D01–D18 were not renumbered.
+P0 rows: 52. That is 47 capability or configuration requirements marked P0, plus BD-D02, BD-D03, BD-D09, BD-D16, and BD-D18. The two deferred rows are PER-CONF-003 and BD-D15. The earlier inventory was 166. Stage 2 added FY-CONF-001 as P1 CONFIGURABLE, which made 167: 111 CORE and 33 CONFIGURABLE. Six later rows make 173: LEAVE-CORE-005, LEAVE-CORE-006, LEAVE-CORE-007, LEAVE-CORE-008, and MIG-CORE-011 are CORE, and LEAVE-CONF-003 is CONFIGURABLE. That is 116 CORE and 34 CONFIGURABLE. LEAVE-CORE-008 stays proposed and is not an approved pay rule. D01–D18 were not renumbered.

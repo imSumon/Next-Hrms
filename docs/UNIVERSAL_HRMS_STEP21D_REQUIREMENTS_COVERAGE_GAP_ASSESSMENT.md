@@ -6,11 +6,11 @@ No company is approved for employee migration. The three seeded company rows do 
 
 ## 1. Sources and where they live
 
-`docs/UNIVERSAL_HRMS_PROJECT_CONTROL_CENTER.md` was absent when Step 21D was written. Step 21E created it afterward, with a matching copy under `legacy-reference\hrms\docs`. `next-hrms\docs` still does not hold it.
+`docs/UNIVERSAL_HRMS_PROJECT_CONTROL_CENTER.md` was absent when Step 21D was written. The active control center and the active requirements file are now in `next-hrms\docs`. This count correction does not rewrite the catalog grain below.
 
 | Document | Location |
 | --- | --- |
-| Requirements, 166 IDs | `legacy-reference\hrms\docs\UNIVERSAL_HRMS_REQUIREMENTS.md` only. The parent `docs` folder does not contain it |
+| Requirements, 173 IDs | Active file `next-hrms\docs\UNIVERSAL_HRMS_REQUIREMENTS.md`. Appendix A. The count when this assessment was written was 166. FY-CONF-001 made 167. LEAVE-CORE-005, LEAVE-CORE-006, LEAVE-CORE-007, LEAVE-CORE-008, MIG-CORE-011, and LEAVE-CONF-003 make 173. LEAVE-CORE-008 stays proposed |
 | Step 21 matrix, coverage report, 21A, 21B, 21C | Both `docs` folders, matching copies |
 | Step 20E reconciliation design | Also in `next-hrms\docs`. That folder does not hold the Step 21 set |
 | Architecture, workbook, closed-month audits, Step 20Q, Step 20R, Step 20R-1 | Both `docs` folders |
@@ -207,7 +207,7 @@ Recruitment, PMS, provident-fund workflows, gratuity-fund workflows, assessments
 
 Requirements analysis is **partially complete**.
 
-The in-scope `shall` text is written and classified into 166 IDs: 111 CORE, 32 CONFIGURABLE, 4 CLIENT EXTENSION, 17 BUSINESS DECISION, and 2 DEFERRED. Five of 25 catalog modules, and 8 of 101 submodules, have partial behavior evidence from Proedge, VTL, and Atlas. No module or submodule is functionally analyzed. Policy values D01–D18 and migration decisions D1, D2, D3, D4 dispositions, and D6 are unsigned. `dis`, overlap, date order, and inactive pay are unresolved. The live catalog comparison is pending. No company is migration-approved.
+The in-scope `shall` text is written. The active total is 173 IDs: 116 CORE, 34 CONFIGURABLE, 4 CLIENT EXTENSION, 17 BUSINESS DECISION, and 2 DEFERRED. The 166 figure was 111 CORE and 32 CONFIGURABLE. FY-CONF-001 made 167. LEAVE-CORE-005, LEAVE-CORE-006, LEAVE-CORE-007, LEAVE-CORE-008, MIG-CORE-011, and LEAVE-CONF-003 make 173. LEAVE-CORE-008 stays proposed. Five of 25 catalog modules, and 8 of 101 submodules, have partial behavior evidence from Proedge, VTL, and Atlas. No module or submodule is functionally analyzed. Policy values D01–D18 and migration decisions D1, D2, D3, D4 dispositions, and D6 are unsigned. `dis`, overlap, date order, and inactive pay are unresolved. The live catalog comparison is pending. No company is migration-approved.
 
 Declaring analysis complete would require signed policy values for the in-scope list, acceptance checks for those values, and an explicit decision that the inventory-only modules stay out of that list. Those signatures are not in the current documents.
 

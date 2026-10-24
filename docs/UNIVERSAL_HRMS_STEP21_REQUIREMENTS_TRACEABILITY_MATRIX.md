@@ -181,19 +181,19 @@ Implemented: `employees` and `employment_episodes` tables, zero rows.
 
 | Field | Content |
 | --- | --- |
-| Requirement IDs | LEAVE-CORE and LEAVE-CONF. BD-D06 |
-| Workflow | A request can mark a day. Pay effect is per type |
-| Current behavior | Status number 3 was the studied “approved” token. Some leave days left basic unchanged. That does not prove every type is paid |
-| Evidence | Architecture assessment section 10. Requirements BD-D06 |
-| Companies | Proedge and VTL samples. Atlas leave rows are recorded in the workbook, not as a full workflow audit |
-| Business requirement | Leave publishes a day classification. Payroll decides the money |
-| Planned behavior | Status number 3 is LEGACY ONLY. Pay class stays empty until BD-D06 |
-| Gap | Hourly leave module is not analyzed. Approval chain is BD-D17 |
-| Class | CORE for the request and the day mark. BUSINESS DECISION for pay |
-| Priority | P1 |
-| Acceptance, not executed | An approved leave day is visible as leave. Basic pay is not assumed unchanged |
-| Dependencies | BD-D06, BD-D17 |
-| Blocker | Development blocked for leave pay. Not a blocker for preserving a historical leave token |
+| Requirement IDs | LEAVE-CORE and LEAVE-CONF, including LEAVE-CORE-005 through LEAVE-CORE-007 and LEAVE-CONF-003. MIG-CORE-011. BD-D06. LEAVE-OPENING |
+| Workflow | A request can mark a day. A balance position stays proposed until a recorded confirmation. Pay effect is per type |
+| Current behavior | Status number 3 was the studied “approved” token. Some leave days left basic unchanged. That does not prove every type is paid. The 2026-10-17 dumps show leave-year labels that match the balance rows. They do not show which figure is the accepted opening, who confirms it, or which writer produced it |
+| Evidence | Architecture assessment section 10. Requirements BD-D06. Evidence register F-31 through F-34 |
+| Companies | Proedge, Viyellatex, and Atlas. Staff practice is not established |
+| Business requirement | Leave publishes a day classification. Payroll decides the money. An opening balance is a proposed position until LEAVE-OPENING is signed |
+| Planned behavior | Status number 3 is LEGACY ONLY. Pay class stays empty until BD-D06. A legacy balance loads only as proposed |
+| Gap | Hourly leave module is not analyzed. Approval chain is BD-D17. Opening figure, leave year, reconciliation, encashment meaning, and the confirmer are unsigned. F-35 through F-37: the studied salary generation does not read the encashment stores |
+| Class | CORE for the request, the day mark, and an unconfirmed position. BUSINESS DECISION for pay and for the opening |
+| Priority | P1. P0 for the migration hold in F-34 |
+| Acceptance, not executed | An approved leave day is visible as leave. Basic pay is not assumed unchanged. A proposed balance is not available for approval |
+| Dependencies | BD-D06, BD-D07, BD-D17, FY-BOUNDARY, LEAVE-OPENING |
+| Blocker | Development blocked for leave pay and for an approved balance. Preserving a historical leave token, and recording a proposed position, do not require the formula |
 | Owner and approval | UNSIGNED |
 
 ### 4.7 Correction and approval

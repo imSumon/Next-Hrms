@@ -18,9 +18,15 @@ import { LandingPage } from './pages/LandingPage';
 import { OrganizationNodePage } from './pages/OrganizationNodePage';
 import { OrganizationPage } from './pages/OrganizationPage';
 import { PreviewMissingPage } from './pages/PreviewMissingPage';
+import { RealSessionAttendanceDashboardPage } from './pages/RealSessionAttendanceDashboardPage';
+import { RealSessionAttendancePage } from './pages/RealSessionAttendancePage';
+import { RealSessionAttendancePeriodsPage } from './pages/RealSessionAttendancePeriodsPage';
 import { RealSessionDirectoryPage } from './pages/RealSessionDirectoryPage';
+import { RealSessionLeavePositionsPage } from './pages/RealSessionLeavePositionsPage';
+import { RealSessionLeaveTypesPage } from './pages/RealSessionLeaveTypesPage';
 import { RealSessionDesignationsPage, RealSessionDepartmentsPage } from './pages/RealSessionMasterPage';
 import { RealSessionProfilePage } from './pages/RealSessionProfilePage';
+import { RealSessionPunchIdentitiesPage } from './pages/RealSessionPunchIdentitiesPage';
 import { SignInPage } from './pages/SignInPage';
 import { AdminShell } from './shells/AdminShell';
 import { EssShell } from './shells/EssShell';
@@ -37,6 +43,14 @@ export function App() {
       <Route path="/session/departments/:recordId" element={<RealSessionDepartmentsPage />} />
       <Route path="/session/designations" element={<RealSessionDesignationsPage />} />
       <Route path="/session/designations/:recordId" element={<RealSessionDesignationsPage />} />
+      <Route path="/session/leave-types" element={<RealSessionLeaveTypesPage />} />
+      <Route path="/session/leave-types/:recordId" element={<RealSessionLeaveTypesPage />} />
+      <Route path="/session/attendance" element={<RealSessionAttendancePage />} />
+      <Route path="/session/attendance/periods" element={<RealSessionAttendancePeriodsPage />} />
+      <Route path="/session/attendance/dashboard" element={<RealSessionAttendanceDashboardPage />} />
+      <Route path="/session/attendance/identities" element={<RealSessionPunchIdentitiesPage />} />
+      <Route path="/session/leave-positions" element={<RealSessionLeavePositionsPage />} />
+      <Route path="/session/leave-positions/:recordId" element={<RealSessionLeavePositionsPage />} />
       <Route path="/preview/sign-in" element={<SignInPage />} />
       <Route path="/preview/demo" element={<DemoEntryPage />} />
       <Route path="/preview/company" element={<ChooseCompanyPage />} />

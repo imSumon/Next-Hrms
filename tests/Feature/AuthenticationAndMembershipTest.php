@@ -309,6 +309,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
     public function test_dev_provisioning_is_refused_outside_local_and_does_not_create_a_company(): void
     {
         $before = Company::query()->count();
+        $usersBefore = User::query()->count();
 
         $this->artisan('hrms:provision-dev-user', [
             '--name' => 'Synthetic Clerk',
@@ -319,7 +320,7 @@ class AuthenticationAndMembershipTest extends EmployeeDatabaseTestCase
         ])->assertFailed();
 
         $this->assertSame($before, Company::query()->count());
-        $this->assertSame(0, User::query()->count());
+        $this->assertSame($usersBefore, User::query()->count());
     }
 
     public function test_dev_provisioning_grants_one_membership_when_local(): void

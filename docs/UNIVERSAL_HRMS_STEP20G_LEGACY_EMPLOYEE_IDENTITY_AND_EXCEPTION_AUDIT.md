@@ -266,4 +266,61 @@ What the schema proves: each current `employees` row can carry one `joining_date
 
 Approve or reject the display-name rule in section 3, and decide whether `0000-00-00` is a missing date. Then build the empty exception register from the dump counts in this report, including the seven VTL duplicate groups, VTL id 437, Proedge id 1, and the both-flags rows, without loading employees. Do not approve Proedge, Atlas, or VTL for migration while both-flags episode status and the display-name rule are still open.
 
+## 11. Viyellatex duplicate-code disposition worksheet
+
+Added 2026-10-17 from the same Viyellatex dump named in section 2, `proedgea_vtlhrm`. This section does not choose a canonical row. CODE-APPROVED and NOMERGE-APPROVED stay in force. D4 stays a proposed group hold. Every group below is unresolved. A row becomes the retained record only when an authorized owner writes that choice, the evidence used, and the date.
+
+Row A is the lower `employees.id` and row B is the higher id. That order is storage order. It is not a validity order. All fourteen rows have local `emp_unit` 5, which is Viyellatex inside this database, not catalog company 20. `active` 1 with `disconrinue` 1 stays the stored pair. D3 does not turn that pair into a status. `0000-00-00` stays an unresolved date. Attendance and salary counts are stored activity on the numeric id. They do not select the valid employee. The punch map is keyed by `emp_code`, so it does not belong to one of the two ids.
+
+| Code | Row | `employees.id` | Name | Joining date | Department | Designation | `active` / `disconrinue` | Leaving date | Type | Shift id | Boss id | Branch id | Attendance rows | Attendance span | Salary rows | Salary span |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `10024` | A | 255 | MOHAMMAD IQRAMUL HOSSAIN | 2008-08-09 | 4 COMMERCIAL | 31 EXE | 1 / 1 | `0000-00-00` | Resignation | 0 | 0 | 4 | 0 | — | 53 | 2014-07 through 2014-09 |
+| `10024` | B | 100497 | Abu Yousuf | 2023-11-13 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 1 | NULL | empty | 14 | 100297 | 29 | 452 | 2023-12-01 through 2025-02-24 | 378 | 2023-12 through 2025-01 |
+| `15575` | A | 270 | ABU NILU MOSTAFA JAMAL | 2011-07-02 | 20 IT | 32 SR EXE | 1 / 1 | 2016-07-01 | Resignation | 0 | 264 | 4 | 320 | 2015-09-01 through 2016-07-16 | 492 | 2014-07 through 2016-06 |
+| `15575` | B | 398 | S M BORHAN UDDIN | 2014-01-11 | 6 DYEING | 7 EXECUTIVE | 1 / 1 | 2016-07-31 | Resignation | 0 | 506 | 2 | 353 | 2015-09-01 through 2016-08-17 | 430 | 2014-12 through 2016-07 |
+| `132058` | A | 100348 | Md. Fahaduzzaman | 2021-05-02 | 70 AAMRA IT | 7 EXECUTIVE | 1 / 1 | NULL | empty | 14 | NULL | 28 | 395 | 2021-09-01 through 2022-09-30 | 324 | 2021-10 through 2022-09 |
+| `132058` | B | 100427 | Probir Protim Roy | 2022-09-01 | 70 AAMRA IT | 7 EXECUTIVE | 1 / 1 | NULL | empty | 14 | NULL | 28 | 1,490 | 2022-09-01 through 2026-09-29 | 1,296 | 2022-09 through 2026-08 |
+| `6119` | A | 100470 | SHAMIM AHMED | 2023-05-27 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 1 | NULL | Long Absent | 19 | 100455 | 6 | 5 | 2023-05-27 through 2023-05-31 | 0 | — |
+| `6119` | B | 100472 | CHOYON ROY | 2023-06-01 | 5 ACCOUNTS & FINANCE | 41 TRAINEE OFFICER | 1 / 1 | 2023-11-30 | Resignation | 18 | 100455 | 6 | 186 | 2023-06-01 through 2023-12-03 | 135 | 2023-06 through 2023-10 |
+| `10023` | A | 100480 | Ariful Islam | 2023-08-13 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 1 | NULL | empty | 14 | 100456 | 29 | 779 | 2023-08-13 through 2025-09-30 | 702 | 2023-08 through 2025-09 |
+| `10023` | B | 100637 | Ariful Islam | 2023-08-13 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 0 | NULL | empty | 14 | NULL | 29 | 374 | 2025-01-03 through 2026-10-08 | 324 | 2025-10 through 2026-09 |
+| `10027` | A | 100582 | LIMON ROY | 2025-01-01 | 5 ACCOUNTS & FINANCE | 29 TRAINEE | 1 / 1 | NULL | empty | 14 | NULL | 29 | 242 | 2025-02-01 through 2025-09-30 | 189 | 2025-03 through 2025-09 |
+| `10027` | B | 100638 | LIMON ROY | 2025-01-01 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 0 | NULL | empty | 14 | NULL | 29 | 373 | 2025-10-01 through 2026-10-08 | 324 | 2025-10 through 2026-09 |
+| `10034` | A | 100586 | PROSHONJIT BAUL | 2025-01-01 | 5 ACCOUNTS & FINANCE | 29 TRAINEE | 1 / 1 | NULL | empty | 14 | NULL | 29 | 242 | 2025-02-01 through 2025-09-30 | 189 | 2025-03 through 2025-09 |
+| `10034` | B | 100639 | PROSHONJIT BAUL | 2025-01-01 | 5 ACCOUNTS & FINANCE | 7 EXECUTIVE | 1 / 0 | NULL | empty | 14 | NULL | 29 | 373 | 2025-10-01 through 2026-10-08 | 324 | 2025-10 through 2026-09 |
+
+Punch-card map rows for these codes. The map has no employee id.
+
+| `emp_code` | Map rows | Card numbers | Other employee code on the same card |
+| --- | --- | --- | --- |
+| `10024` | 1 | `10024` | none in this dump |
+| `15575` | 1 | `118441` | none in this dump |
+| `132058` | 2 | `132058` | `03129399` also maps to card `132058` |
+| `6119` | 2 | `6119` | none in this dump |
+| `10023` | 2 | `10023` | none in this dump |
+| `10027` | 2 | `10027` | none in this dump |
+| `10034` | 2 | `10034` | none in this dump |
+
+Stored bosses, for the ids that are not 0 or NULL: 264 code `14134`; 506 code `015650`; 100297 code blank on that row, name stored as DIRECTOR AMIR HASANAT; 100455 code `6118`; 100456 code `10001`. No employment-history text is stored on any of the fourteen rows.
+
+Conflicts that block a choice from these fields alone:
+
+- `10024`, `15575`, `132058`, and `6119` store different names on the two rows.
+- `10023` stores the same name and joining date, with discontinue 1 on A and 0 on B. Attendance on the two ids overlaps from 2025-01-03 through 2025-09-30.
+- `132058` attendance overlaps in September 2022. `15575` attendance overlaps from 2015-09-01 through 2016-07-16.
+- `10027` and `10034` store the same name and joining date. The stored attendance spans meet at 2025-10-01 and do not overlap. The designation text differs, and the discontinue flag differs. That pattern still does not identify the valid row.
+- Two map rows for one code, and card `132058` on a third code, do not assign the card to row A or row B.
+
+Owner options for each group, and for no other outcome: retain row A and leave row B an unresolved exception; retain row B and leave row A an unresolved exception; or retain neither and leave both unresolved. No merge, no delete, and no recode.
+
+| Code | Disposition | Owner | Date | Evidence the owner cites |
+| --- | --- | --- | --- | --- |
+| `10024` | Unresolved | | | |
+| `15575` | Unresolved | | | |
+| `132058` | Unresolved | | | |
+| `6119` | Unresolved | | | |
+| `10023` | Unresolved | | | |
+| `10027` | Unresolved | | | |
+| `10034` | Unresolved | | | |
+
 IDENTITY AUDIT COMPLETE

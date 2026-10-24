@@ -171,7 +171,7 @@ Same-second source uniqueness may already have dropped an event before extract. 
 | Leave request | Load range, type, and reason into `leave_requests` |
 | Approval outcome | Load as a historical approval instance. The legacy status number is a source token, not the target’s approved value |
 | Leave days | Load `leave_day_impacts` where the source day result shows that leave was applied on that date |
-| Balances | Load only when a real balance exists in the source. Do not compute a new balance |
+| Balances | A source row may be kept as a proposed position under LEAVE-CORE-005 and MIG-CORE-011. It is not a confirmed balance. Do not compute a new balance. Do not fill an empty variance with zero |
 | Historical rows | Preserve. Do not re-approve them through a new step list |
 
 Business validation is required when:
@@ -179,6 +179,7 @@ Business validation is required when:
 - the status number’s meaning is not confirmed for that company
 - a request exists and the day result does not show the leave, or the reverse
 - a balance exists but the requests do not explain it
+- the opening figure, the leave period, the encashment amount, or the confirmer is unresolved
 - the type’s pay effect is needed for a future payroll rule
 
 Those rows wait in the exception register or are loaded as historical facts with the pay effect left empty. BD-D06 stays open. Both studied closed months left basic pay unchanged on leave days. That evidence does not become a paid-leave rule.
@@ -318,7 +319,7 @@ Employee-day counts. Counts of the source tokens for present, absent, leave, hol
 
 ### Leave
 
-Applications. Approved and rejected as source outcomes, after that company’s status numbers have been validated. Leave days on the day results. Balances where the source has them.
+Applications. Approved and rejected as source outcomes, after that company’s status numbers have been validated. Leave days on the day results. Proposed balances where the source has them, with the period label, source evidence, and exception status. A proposed balance is not reported as a confirmed opening. Where `prev_bal`, `earned`, or `encashment` is present, each amount stays in its source column until LEAVE-OPENING is signed.
 
 ### Overtime
 
@@ -374,6 +375,9 @@ Examples that must be register rows, not silent drops:
 - OT quantity whose unit is unknown
 - payroll amount with no employee
 - unknown legacy status number
+- leave balance whose opening figure, period, or confirmer is unresolved
+- encashment amount whose validation is unresolved
+- leave-balance year label that does not match that company’s stored leave-year labels
 - missing source key
 - lock flag offered as proof of close
 - photo text offered as a weekly off
@@ -491,6 +495,7 @@ Migration does not decide these. Historical source values may be stored as histo
 | BD-D04 Late start | Stored durations stay durations. The start rule is not inferred |
 | BD-D05 Early pay | Early evidence stays evidence. No deduction is created |
 | BD-D06 Leave pay | Types load. Pay class stays empty |
+| LEAVE-OPENING | Source balances stay proposed. No opening formula, leave year, or confirmer is inferred from a stored column. An `ENC` day count and an `earn_leave_encashment` net payable are not loaded as `employee_salary` |
 | BD-D07 Absence | Historical deduction heads load as amounts. The formula is not inferred |
 | BD-D08 Eligibility | The legacy flag is not loaded |
 | BD-D09 Formula | OT quantities load only with a confirmed source unit. No formula |

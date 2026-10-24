@@ -30,3 +30,11 @@ These come from schema section 4.2, the branch table, and ORG-CORE-005 and ORG-C
 - Withdrawal keeps the row. Status may be set to either allowed value.
 - Name and status changes are audited in the same transaction. Section 4.2 does not require a creation audit, and this direction does not add one.
 - Employees are not assigned to either master.
+
+## Owner intent recorded on 2026-10-16
+
+This section does not replace the rule above and does not sign SEC-CORE-004.
+
+The owner recorded intent, for preparation of the authorization record, to establish a later company-scoped responsibility for user membership and role administration. That responsibility is separate from employee management, from these organization masters, and from payroll and attendance approval. It does not add a third permission boolean. The two flags in the rule above stay in force until an approved and tested mapping replaces them.
+
+`UNIVERSAL_HRMS_AUTHORIZATION_DECISION_RECORD_DELTA.md` is that preparation record. It is not Step 20R. Until the owner confirms it there, the sentence "There is no company-administrator role" remains the implementation rule.

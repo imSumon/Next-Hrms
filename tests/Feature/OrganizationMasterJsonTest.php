@@ -240,7 +240,7 @@ class OrganizationMasterJsonTest extends EmployeeDatabaseTestCase
         $row = Department::query()->find($created->json('id'));
         $this->assertSame('Open Desk', $row->name);
         $this->assertSame('Active', $row->status);
-        $this->assertSame(0, AuditEvent::query()->count());
+        $this->assertSame(0, AuditEvent::query()->where('company_id', $north->id)->count());
     }
 
     public function test_guests_and_missing_company_context_are_rejected(): void

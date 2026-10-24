@@ -38,8 +38,8 @@ A newer file time was not the reason for these labels. The labels follow what ea
 - The rejoin-message correction is complete. It is not the next implementation task.
 - The next product implementation milestone is not authorized.
 - The access-model brief and the BD-D16 / BD-D17 worksheet remain unsigned.
-- SEC-CORE-003, SEC-CORE-004, D1–D6, and the attendance and payroll decisions listed in the active control center remain unsigned. BD-D15 remains deferred. SCOPE-01 remains deferred.
-- No module, permission model, schema, migration, or attendance or payroll workflow may be implemented because this authority note exists.
+- SEC-CORE-004 is approved as the initial role list in Step 20R section 6C, dated 2026-10-17, subject to the conditions in that section. The role-matrix build is not authorized. SEC-CORE-003 remains unsigned. D1–D6 and the attendance and payroll decisions listed in the active control center remain unsigned. BD-D15 remains deferred. SCOPE-01 remains deferred. The first-release scope boundary is approved in Step 20R section 6D, dated 2026-10-17. That approval does not authorize implementation.
+- A new module, permission model, schema, migration, or attendance or payroll workflow may be implemented only after a named implementation milestone is authorized in Step 20R, with Approver name/role and Approval date, and is recorded in section 5 of `next-hrms\docs\UNIVERSAL_HRMS_INCREMENTAL_DELIVERY_AND_DECISION_GATES.md`. This authority note does not authorize that milestone. First-release scope, AUTH-ARCH, the SEC-CORE-004 list, design documents, and UAT results do not authorize it. G1 Option A, recorded 2026-10-18 by Owner, Owner, is the documentation rule for this sentence.
 - The implemented employee foundation, including login, active company, logout, directory, profile, display-name history, episodes, and the approved rejoin rule, is not blocked by those unsigned decisions. Department and designation masters exist under the Stage 5D working direction. That direction is not an owner signature. Automated tests are not signed-in browser UAT.
 - AUD-01 through AUD-07 are not to be repeated in order to decide which folder is authoritative.
 - No company is migration-approved. The three company rows are tenant records.
@@ -53,6 +53,7 @@ If an instruction in the parent `docs` folder, or in `legacy-reference\hrms\docs
 - Follow section 4 of that same active gates file for gate status when the task is about a decision. Do not revive a gate from the parent copy.
 - Do not treat the parent gates section 5 as the current next task. Check the active section 5 first.
 - Do not treat an unsigned brief or worksheet as a signed decision. Step 20R remains the register, and its blank fields stay blank until the owner writes them.
+- If two active files in `next-hrms\docs` disagree about whether new work may start: follow Step 20R for signed decisions; follow gates section 5 for whether a milestone is authorized; follow gates section 4 for what a named unsigned decision blocks. A conflict this note does not classify stays **UNRESOLVED**.
 - Do not silently copy one file over the other. Do not "synchronize" the folders. A conflict that this note does not already classify is **UNRESOLVED** until it is read and recorded. It is not resolved by overwriting.
 
 The parent section 5 instruction to correct the rejoin message is a known obsolete instruction. Completing it again is not required.

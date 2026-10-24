@@ -27,6 +27,9 @@
                     @endif
                     @if (session('company_context_id'))
                         <a href="{{ route('employees.index') }}">Employees</a>
+                        @if ($canOpenAttendance ?? false)
+                            <a href="/session/attendance/dashboard">Attendance</a>
+                        @endif
                     @endif
                     <form method="post" action="{{ route('logout') }}">
                         @csrf

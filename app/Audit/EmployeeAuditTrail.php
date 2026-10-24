@@ -18,6 +18,7 @@ class EmployeeAuditTrail
         string $actionKind,
         ?array $previous,
         ?array $new,
+        ?string $reason = null,
     ): AuditEvent {
         $actorId = Auth::id();
         if (! is_string($actorId) || $actorId === '') {
@@ -33,6 +34,7 @@ class EmployeeAuditTrail
             'acted_at' => now(),
             'previous_value' => $previous,
             'new_value' => $new,
+            'reason' => $reason,
         ]);
     }
 }
